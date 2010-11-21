@@ -3,5 +3,17 @@
 require File.expand_path(
     File.join(File.dirname(__FILE__), %w[.. lib template_builder]))
 
-# Put your code here
+filename = ARGV[0]
+
+unless filename
+  puts "we need at least one argument"
+  exit
+else
+  ARGV.shift
+end
+
+template_builder = TemplateBuilder.new
+template_builder.build_template_file filename.to_s
+command = template_builder.start_rails
+puts "You can now run #{command} !!!"
 

@@ -1,6 +1,6 @@
 template_builder
     by Anthony Laibe
-    http://github/zetm9/template_builder
+    https://github.com/alaibe/template_builder
 
 == DESCRIPTION:
 
