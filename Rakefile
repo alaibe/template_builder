@@ -12,7 +12,7 @@ Bones {
   name  'template_builder'
   authors  'Anthony'
   email  'anthony.laibe@gmail.com'
-  url      'FIXME (project homepage)'
+  url      'http://github/zetm9/template_builder'
   ignore_file  '.gitignore'
 }
 
