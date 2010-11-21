@@ -1,32 +1,30 @@
 template_builder
-    by FIXME (your name)
-    FIXME (url)
+    by Anthony Laibe
+    http://github/zetm9/template_builder
 
 == DESCRIPTION:
 
-FIXME (describe your package)
+Generate a template for your ruby on rails project
 
 == FEATURES/PROBLEMS:
 
-* FIXME (list of features or problems)
 
 == SYNOPSIS:
-
-  FIXME (code sample of usage)
+  
+  template_builder foo
 
 == REQUIREMENTS:
 
-* FIXME (list of requirements)
 
 == INSTALL:
 
-* FIXME (sudo gem install, anything else)
+  gem install template_builder
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2009 FIXME (different license?)
+Copyright (c) 2009
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
