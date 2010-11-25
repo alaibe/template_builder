@@ -1,19 +1,13 @@
 #!/usr/bin/env ruby
 
-require File.expand_path(
-    File.join(File.dirname(__FILE__), %w[.. lib template_builder]))
+root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
-filename = ARGV[0]
-
-unless filename
-  puts "we need at least one argument"
-  exit
-else
-  ARGV.shift
+begin
+  require File.join(root, %w[lib template_builder])
+rescue LoadError
+  require 'template_builder'
 end
 
-template_builder = TemplateBuilder.new
-template_builder.build_template_file filename.to_s
-command = template_builder.start_rails
-puts "You can now run #{command} !!!"
+TemplateBuilder::App.initialize_plugins
+TemplateBuilder::App.run
 

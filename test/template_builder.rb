@@ -1,4 +1,3 @@
-require File.join(File.dirname(__FILE__),"/framework_builder.rb")
 class TemplateBuilder
     
     def initialize
