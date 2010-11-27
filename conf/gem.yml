@@ -32,7 +32,7 @@ tools_mongo: &tools_mongo
         source :
         version :
 
-database :
+database : 
     sqlite :
     oracle :
     mongo  :

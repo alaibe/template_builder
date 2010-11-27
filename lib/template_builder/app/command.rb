@@ -72,7 +72,6 @@ class TemplateBuilder::App::Command
       self.class.description.split("\n").each { |line| opts.separator "  #{line.strip}" }
       opts.separator ''
     end
-
     if self.class.options and not self.class.options.empty?
       opts.separator 'PARAMETERS'
       self.class.options.each { |option|
@@ -100,15 +99,12 @@ class TemplateBuilder::App::Command
 
   #
   #
-  def self.standard_options
-    @standard_options ||= {
-      :verbose => ['-v', '--verbose', 'Enable verbose output.',
-          lambda { config[:verbose] = true }],
-
-      :directory => ['-d', '--directory DIRECTORY', String,
-          'Project directory to create.',  '(defaults to .)',
-          lambda { |value| config[:output_dir] = value }],
-    }
+  def self.standard_options 
+    return @standard_options if @standard_options
+    @standard_options = TemplateBuilder::App::FileAnalyzer.load_standart_options
+    @standard_options[:verbose] = ['-v', '--verbose', 'Enable verbose output.',
+            lambda { config[:verbose] = true }]
+    @standard_options      
   end
 
   module ClassMethods
@@ -130,7 +126,6 @@ class TemplateBuilder::App::Command
     def option( *args, &block )
       args.flatten!
       block = args.pop if block.nil? and Proc === args.last
-
       if block
         args.each { |val|
           next unless val.instance_of? String

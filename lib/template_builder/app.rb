@@ -4,6 +4,8 @@ require 'uri'
 module TemplateBuilder::App
   extend LittlePlugger(:path => 'template_builder/app', :module => TemplateBuilder::App)
 
+  disregard_plugins :command, :file_manager, :file_analyzer
+
   Error = Class.new(StandardError)
 
   # Create a new instance of Main, and run the +template_builder+ application given
@@ -34,21 +36,21 @@ module TemplateBuilder::App
     #
     def run( args )
       commands = []
-      @plugins = ::TemplateBuilder::App.plugins
-      @plugins.each { |k,v| commands << k.to_s if v < ::TemplateBuilder::App::Command }
-      
+      @all_commands = ::TemplateBuilder::App.plugins
+      @all_commands.each { |k,v| commands << k.to_s if v < ::TemplateBuilder::App::Command }
       cmd_str = args.shift
       cmd = case cmd_str
         when *commands
           key = cmd_str.to_sym
-          @plugins[key].new @opts
+          @all_commands[key].new @opts          
         when nil, '-h', '--help'
           help
         when '-v', '--version'
           stdout.puts "TemplateBuilder v#{::TemplateBuilder.version}"
         else
+          help
           raise Error, "Unknown command #{cmd_str.inspect}"
-        end
+        end        
       if cmd
         cmd.parse args
         cmd.run
@@ -64,7 +66,7 @@ module TemplateBuilder::App
       exit 1
     end
 
-    # Show the toplevel Mr Bones help message.
+    # Show the toplevel Template builder help message.
     #
     def help
       msg = <<-MSG
@@ -79,25 +81,23 @@ DESCRIPTION
   Usage:
     template_builder -h/--help
     template_builder -v/--version
-    bones command [options] [arguments]
+    template_builder command [options] [arguments]
 
   Examples:
-    template_builder new new_template
-    template_builder edit old_template
+    template_builder new <new_template_file>
+    template_builder edit<old_template_file>
 
   Commands:
       MSG
-
      fmt = lambda { |cmd|
-             if @plugins[cmd] < ::TemplateBuilder::App::Command
-               msg << "    template_builder %-15s %s\n" % [cmd, @plugins[cmd].summary]
+             if @all_commands[cmd] < ::TemplateBuilder::App::Command
+               msg << "    template_builder %-15s %s\n" % [cmd, @all_commands[cmd].summary]
+               puts msg
              end
            }
-
-     ary = [:new, :edit, :info, :info]
+     ary = [:new, :edit]
      ary.each(&fmt)
-     (@plugins.keys - ary).each(&fmt)
-
+     (@all_commands.keys - ary).each(&fmt)
       msg.concat <<-MSG
 
   Further Help:

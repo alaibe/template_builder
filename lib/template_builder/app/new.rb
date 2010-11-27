@@ -5,15 +5,16 @@ class New < Command
   def self.initialize_new
     synopsis 'template_builder new template_name [options]'
 
-    summary 'create a new template in consequence of your choice'
+    summary 'create a new template for your rails application.'
 
     description <<-__
-Create a new template in consequence of your choice. You can add a lot
+create a new template for your rails application. You can add a lot
 of option as the database, the javascript framework etc .. 
     __
     
-    option(standard_options[:directory])
-    option(standard_options[:verbose])
+    TemplateBuilder::App::FileAnalyzer.all_options.each {|item| 
+      option(standard_options[item]) }  
+    
   end
 
   def self.in_output_directory( *args )
@@ -36,7 +37,6 @@ of option as the database, the javascript framework etc ..
 
   def parse( args )
     opts = super args
-    
     config[:name] = args.empty? ? nil : args.join('_')
     config[:output_dir] = name if output_dir.nil?
     if name.nil?
