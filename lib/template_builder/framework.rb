@@ -1,8 +1,8 @@
 require 'net/http'
 require 'uri'
 
-module TemplateBuilder::App
-  extend LittlePlugger(:path => 'template_builder/app', :module => TemplateBuilder::App)
+module TemplateBuilder::Framework
+  extend LittlePlugger(:path => 'template_builder/framework', :module => TemplateBuilder::Framework)
 
   disregard_plugins :command, :file_manager, :file_analyzer
 

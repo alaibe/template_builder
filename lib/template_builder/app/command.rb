@@ -1,5 +1,6 @@
 
-class TemplateBuilder::App::Command
+module TemplateBuilder::App
+class Command
 
   # :startdoc:
 
@@ -7,32 +8,14 @@ class TemplateBuilder::App::Command
   attr_reader :stderr
   attr_reader :config
 
-
   def initialize( opts = {} )
     @stdout = opts[:stdout] || $stdout
     @stderr = opts[:stderr] || $stderr
-
-    @config = {
-      :verbose => false,
-      :name => nil,
-      :output_dir => nil
-    }
+    @config = {}
   end
 
   def run( args )
     raise NotImplementedError
-  end
-
-  # The output directory where files will be written.
-  #
-  def output_dir
-    @config[:output_dir]
-  end
-
-  # The directory where the project skeleton is located.
-  #
-  def skeleton_dir
-    @config[:skeleton_dir]
   end
 
   # The project name from the command line.
@@ -40,8 +23,11 @@ class TemplateBuilder::App::Command
   def name
     @config[:name]
   end
-
-
+  
+  def force
+     @config[:force]
+  end
+  
   # Returns +true+ if the user has requested verbose messages.
   #
   def verbose?
@@ -85,14 +71,12 @@ class TemplateBuilder::App::Command
       }
       opts.separator ''
     end
-
     opts.separator '  Common Options:'
     opts.on_tail( '-h', '--help', 'show this message' ) {
       stdout.puts opts
       exit
     }
     opts.on_tail ''
-    
     opts.parse! args
     return opts
   end
@@ -104,6 +88,8 @@ class TemplateBuilder::App::Command
     @standard_options = TemplateBuilder::App::FileAnalyzer.load_standart_options
     @standard_options[:verbose] = ['-v', '--verbose', 'Enable verbose output.',
             lambda { config[:verbose] = true }]
+    @standard_options[:force] = ['-f', '--force', 'Force creating file.',
+            lambda { config[:force] = true }]
     @standard_options      
   end
 
@@ -151,5 +137,5 @@ class TemplateBuilder::App::Command
   end
 
 end  # class TemplateBuilder::App::Command
-
+end
 # EOF

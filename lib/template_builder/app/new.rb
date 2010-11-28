@@ -14,21 +14,21 @@ of option as the database, the javascript framework etc ..
     
     TemplateBuilder::App::FileAnalyzer.all_options.each {|item| 
       option(standard_options[item]) }  
-    
-  end
-
-  def self.in_output_directory( *args )
-    @in_output_directory ||= []
-    @in_output_directory.concat(args.map {|str| str.to_sym})
-    @in_output_directory
+     option(standard_options[:verbose])
+     option(standard_options[:force])
   end
 
   def run
-    raise Error, "Output directory #{output_dir.inspect} already exists." if test ?e, output_dir
-
-    copy_files
-    announce
-
+    raise Error, "File #{name} already exists." if !force and test ?e, name
+    
+    fm = FileManager.new(
+      :file => name,
+      :stdout => stdout,
+      :stderr => stderr,
+      :verbose => verbose?
+    )
+    announce 
+    
     in_directory(output_dir) {
       self.class.in_output_directory.each {|cmd| self.send cmd}
       fixme
@@ -38,7 +38,6 @@ of option as the database, the javascript framework etc ..
   def parse( args )
     opts = super args
     config[:name] = args.empty? ? nil : args.join('_')
-    config[:output_dir] = name if output_dir.nil?
     if name.nil?
       stdout.puts opts
       exit 1
@@ -47,8 +46,8 @@ of option as the database, the javascript framework etc ..
 
   def copy_files
     fm = FileManager.new(
-      :source => repository || skeleton_dir,
-      :destination => output_dir,
+      :create_file => create_file,
+      :file => output_dir,
       :stdout => stdout,
       :stderr => stderr,
       :verbose => verbose?
@@ -71,8 +70,11 @@ of option as the database, the javascript framework etc ..
   end
 
   def announce
-    msg = "Created '#{name}'"
-    msg << " in directory '#{output_dir}'" if name != output_dir
+    complete_name = name.split("/")
+    file = complete_name.last
+    output_dir = complete_name[0..complete_name.length-2]
+    msg = "Created '#{file}'"
+    msg << " in directory '#{output_dir}'" if name.to_s != output_dir.to_s
     stdout.puts msg
   end
 
