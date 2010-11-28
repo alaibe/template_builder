@@ -29,7 +29,7 @@ of option as the database, the javascript framework etc ..
       :verbose => verbose?
     )
     announce 
-    
+    @config_param.each{ |k,v| ask_for k unless v}
     
   end
 
@@ -40,31 +40,6 @@ of option as the database, the javascript framework etc ..
       stdout.puts opts
       exit 1
     end
-  end
-
-  def copy_files
-    fm = FileManager.new(
-      :create_file => create_file,
-      :file => output_dir,
-      :stdout => stdout,
-      :stderr => stderr,
-      :verbose => verbose?
-    )
-
-    fm.copy
-    fm.finalize name
-  rescue Bones::App::FileManager::Error => err
-    FileUtils.rm_rf output_dir
-    msg = "Could not create '#{name}'"
-    msg << " in directory '#{output_dir}'" if name != output_dir
-    msg << "\n\t#{err.message}"
-    raise Error, msg
-  rescue Exception => err
-    FileUtils.rm_rf output_dir
-    msg = "Could not create '#{name}'"
-    msg << " in directory '#{output_dir}'" if name != output_dir
-    msg << "\n\t#{err.inspect}"
-    raise Error, msg
   end
 
   def announce

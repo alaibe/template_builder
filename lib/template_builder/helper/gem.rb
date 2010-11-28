@@ -1,6 +1,6 @@
 
-module TemplateBuilder::Utils
-  class Gem
+module TemplateBuilder::Helper
+class Gem
   attr_reader :name, :version, :source
   def initialize(name, version, source)
     @version = version
@@ -15,4 +15,5 @@ module TemplateBuilder::Utils
     gem << ", :"+@source+"" if @source
     gem
   end
+end
 end

@@ -11,7 +11,10 @@ class Command
   def initialize( opts = {} )
     @stdout = opts[:stdout] || $stdout
     @stderr = opts[:stderr] || $stderr
-    @config = {}
+    
+    @config = {:name => nil, :force => nil, :verbose =>nil}
+    @config_param = {}
+    standard_parameters.each_key{ |key| @config_param[key] = nil}
   end
 
   def run( args )
@@ -65,9 +68,11 @@ class Command
     if self.class.parameters and not self.class.parameters.empty?
       opts.separator 'PARAMETER'
       self.class.parameters.each { |parameter|
+        puts parameter
         case parameter
         when Array
           parameter << method(parameter.pop) if parameter.last =~ %r/^__/
+          puts parameter
           opts.on(*parameter)
         when String
           opts.separator("  #{parameter.strip}")
@@ -111,6 +116,11 @@ class Command
     return @standard_parameters if @standard_parameters
     @standard_parameters = TemplateBuilder::App::FileAnalyzer.load_standard_parameters
     @standard_parameters      
+  end
+  
+  def ask_for(framework_name)
+    TemplateBuilder::App::FileAnalyzer.load_framework framework_name
+    puts "Choose your "+framework_name.to_s+" framework ?" 
   end
   
   module ClassMethods
