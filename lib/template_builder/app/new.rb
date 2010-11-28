@@ -3,7 +3,7 @@ module TemplateBuilder::App
 class New < Command
 
   def self.initialize_new
-    synopsis 'template_builder new template_name [options]'
+    synopsis 'template_builder new [name] [parameter:type parameter:type] [options]'
 
     summary 'create a new template for your rails application.'
 
@@ -12,8 +12,9 @@ create a new template for your rails application. You can add a lot
 of option as the database, the javascript framework etc .. 
     __
     
-    TemplateBuilder::App::FileAnalyzer.all_options.each {|item| 
-      option(standard_options[item]) }  
+    TemplateBuilder::App::FileAnalyzer.all_parameters.each {|item| 
+      parameter(standard_parameters[item])
+    }  
      option(standard_options[:verbose])
      option(standard_options[:force])
   end
@@ -29,10 +30,7 @@ of option as the database, the javascript framework etc ..
     )
     announce 
     
-    in_directory(output_dir) {
-      self.class.in_output_directory.each {|cmd| self.send cmd}
-      fixme
-    }
+    
   end
 
   def parse( args )
