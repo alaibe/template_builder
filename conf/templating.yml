@@ -1,0 +1,11 @@
+erb :
+haml :
+    haml:
+        version : >= 3.0.0
+        source :
+    haml-rails :
+        version : 
+        source :
+    rails3-generators :
+        version :
+        source : git => 'git://github.com/indirect/rails3-generators.git'

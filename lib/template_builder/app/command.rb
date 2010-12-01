@@ -68,11 +68,9 @@ class Command
     if self.class.parameters and not self.class.parameters.empty?
       opts.separator 'PARAMETER'
       self.class.parameters.each { |parameter|
-        puts parameter
         case parameter
         when Array
           parameter << method(parameter.pop) if parameter.last =~ %r/^__/
-          puts parameter
           opts.on(*parameter)
         when String
           opts.separator("  #{parameter.strip}")
@@ -114,13 +112,25 @@ class Command
 
   def self.standard_parameters 
     return @standard_parameters if @standard_parameters
-    @standard_parameters = TemplateBuilder::App::FileAnalyzer.load_standard_parameters
+    @standard_parameters = FileAnalyzer.load_standard_parameters
     @standard_parameters      
   end
   
   def ask_for(framework_name)
-    TemplateBuilder::App::FileAnalyzer.load_framework framework_name
-    puts "Choose your "+framework_name.to_s+" framework ?" 
+    all_frameworks = FileAnalyzer.all_frameworks_for framework_name
+    puts "Choose your "+framework_name.to_s+" framework ? (enter 0 for none)"
+    until @config_param[framework_name]
+      all_frameworks.each_with_index{ |value,index| puts "("+(index+1).to_s+") "+value.to_s+"\r\n" }
+      answer = STDIN.gets
+      @config_param[framework_name] = all_frameworks[answer.to_i-1] if (1..all_frameworks.length).include? answer.to_i
+      @config_param[framework_name] = "none" if 0 == answer
+    end 
+    
+  end
+  
+  def run_framework(fileManager, opts = {})
+    framework = FileAnalyzer.load_framework opts
+    framework.write fileManager
   end
   
   module ClassMethods

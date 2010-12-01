@@ -1,0 +1,7 @@
+cucumber :
+    cucumber-rails :
+        version :
+        source :
+    capybara :
+        version :
+        source :

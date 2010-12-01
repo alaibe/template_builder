@@ -16,8 +16,13 @@ module TemplateBuilder::App
       @err = opts[:stderr] || $stderr
     end
     
-    def write content
+    def write(content)
       self.file.write content+"\n"
     end
+    
+    def write_gem (gem)
+      write "gem "+gem
+    end
+    
   end
 end

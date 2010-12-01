@@ -81,7 +81,7 @@ DESCRIPTION
   Usage:
     template_builder -h/--help
     template_builder -v/--version
-    template_builder [command] [parameter:type parameter:type] [options]
+    template_builder [command] [parameter type parameter type] [options]
 
   Examples:
     template_builder new <new_template_file>

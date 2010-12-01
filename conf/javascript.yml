@@ -1,0 +1,18 @@
+prototype :
+jquery :
+   rails.js :
+       version : 
+       source : https://github.com/rails/jquery-ujs/raw/master/src/rails.js
+   jquery.min.js :
+       version :
+       source : http://code.jquery.com/jquery-1.4.2.min.js
+   action :
+mootools :
+   rails.js :
+       version : 
+       source : https://github.com/kevinvaldek/mootools-ujs/raw/master/Source/rails.js
+   mootools.min.js :
+       version :
+       source : http://ajax.googleapis.com/ajax/libs/mootools/1.2.5/mootools-yui-compressed.js
+   command :
+   action : 

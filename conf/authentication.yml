@@ -1,0 +1,8 @@
+devise :
+    devise :
+        version :
+        source :
+omniauth :
+    omniauth :
+        version :
+        source :

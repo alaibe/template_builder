@@ -14,8 +14,12 @@ module TemplateBuilder::App::FileAnalyzer
     YAML.load_file(File.join(TemplateBuilder::PATH,"/conf/"+file_name.to_s+".yml"))
   end
   
-  def self.load_framework(name)
-    FileFramework.new(name).load_framework
+  def self.all_frameworks_for(name)
+    FileFramework.new(name).all_frameworks
+  end
+  
+  def self.load_framework(opts = {})
+    FileFramework.new(opts[:type]).load_framework opts[:name]
   end
   
   class FileParameter
@@ -30,8 +34,8 @@ module TemplateBuilder::App::FileAnalyzer
     end
 
     def analyse_file
-      @config_file.each{ |k,v| @parameters[k.to_sym] = ["-#{k[0..0].to_s}:", "--#{k}:NAME", "#{v.capitalize} .",
-              lambda { |item| puts item; config[k.to_sym] = item }]  }
+      @config_file.each{ |k,v| @parameters[k.to_sym] = ["-#{k[0..0].to_s}", "--#{k} FRAMEWORK", "#{v.capitalize} .",
+              lambda { |item| @config_param[k.to_sym] = item }]  }
     end
     
     def load_conf_file
@@ -47,15 +51,29 @@ module TemplateBuilder::App::FileAnalyzer
     
     def initialize(args)
      @name = args 
+     load_conf_file
     end
     
-    def load_framework
-      load_conf_file
-      
+    def all_frameworks
+      @config_file.each_key.to_a
     end
     
     def load_conf_file
       @config_file = TemplateBuilder::App::FileAnalyzer.load_conf_file @name
+    end
+    
+    def load_framework(name)
+      opts = {:name => name, :gems =>[]}
+      @config_file[name].each do |key, value|
+        if ["command","action"].include? key
+          opts[key.to_sym] = value
+        else
+          gem = {:name => key}
+          value.each {|key,value| gem[key.to_sym] = value}
+          opts[:gems] << gem
+        end
+      end 
+      TemplateBuilder::App::Helper.framework_factory opts
     end
     
   end

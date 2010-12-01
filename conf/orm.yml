@@ -1,0 +1,50 @@
+active_record :
+
+data_mapper:
+    dm-migrations:
+        version : 
+        source :
+    dm-types:
+        version : 
+        source :
+    dm-validations:
+        version : 
+        source :
+    dm-constraints:
+        version : 
+        source :
+    dm-transactions:
+        version : 
+        source :
+    dm-aggregates:
+        version : 
+        source :
+    dm-timestamps:
+        version : 
+        source :
+    dm-observer:
+        version : 
+        source :
+    
+
+mongo_mapper :
+   mongo_mapper :
+       version : 
+       source :
+   bson_ext :
+       version :
+       source :
+   mongo_session_store :
+       source :
+       version :
+
+mongoid :
+   mongoid :
+       version : >= 2.0.0.beta.19 
+       source :
+   bson_ext :
+       version :
+       source :
+   mongo_session_store :
+       source :
+       version :

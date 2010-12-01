@@ -3,7 +3,7 @@ module TemplateBuilder::App
 class New < Command
 
   def self.initialize_new
-    synopsis 'template_builder new [name] [parameter:type parameter:type] [options]'
+    synopsis 'template_builder new [name] [parameter type parameter type] [options]'
 
     summary 'create a new template for your rails application.'
 
@@ -12,7 +12,7 @@ create a new template for your rails application. You can add a lot
 of option as the database, the javascript framework etc .. 
     __
     
-    TemplateBuilder::App::FileAnalyzer.all_parameters.each {|item| 
+    FileAnalyzer.all_parameters.each {|item| 
       parameter(standard_parameters[item])
     }  
      option(standard_options[:verbose])
@@ -30,6 +30,8 @@ of option as the database, the javascript framework etc ..
     )
     announce 
     @config_param.each{ |k,v| ask_for k unless v}
+    
+    @config_param.each{ |k,v| run_framework fm, :type=>k, :name=>v unless v == "none"}
     
   end
 

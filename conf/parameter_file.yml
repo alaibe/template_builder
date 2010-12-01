@@ -1,11 +1,11 @@
-database : set the database you want to use
+#database : set the database you want to use
 orm : set the orm framework you want to use
-javascript : set the javascript framework you want to use
-templating : set the templating framework you want to use
-css : set the css framework you want to use
-unit_testing : set the unit testing framework you want to use
-integration_testing : set the integration testing framework you want to use
-authentication : set the authentication framework you want to use
+#javascript : set the javascript framework you want to use
+#templating : set the templating framework you want to use
+#css : set the css framework you want to use
+#unit_testing : set the unit testing framework you want to use
+#integration_testing : set the integration testing framework you want to use
+#authentication : set the authentication framework you want to use
 
 
 
