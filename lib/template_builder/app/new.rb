@@ -21,17 +21,21 @@ of option as the database, the javascript framework etc ..
 
   def run
     raise Error, "File #{name} already exists." if !force and test ?e, name
-    
-    fm = FileManager.new(
+    file_manager = FileManager.new(
       :file => name,
       :stdout => stdout,
       :stderr => stderr,
       :verbose => verbose?
     )
     announce 
-    @config_param.each{ |k,v| ask_for k unless v}
+    sorted_param =  @config_param.sort{|a,b| a[1].to_s.to_i <=> b[1].to_s.to_i }.map
+    sorted_param.each{ |k,v| ask_for k unless v.length == 2}
     
-    @config_param.each{ |k,v| run_framework fm, :type=>k, :name=>v unless v == "none"}
+    file_manager.start_file @config_param
+    
+    @config_param.each{ |k,v| run_framework file_manager, :type=>k, :name=>v unless v == "none"}
+
+    file_manager.end_file name, @command
     
   end
 
@@ -51,12 +55,6 @@ of option as the database, the javascript framework etc ..
     msg = "Created '#{file}'"
     msg << " in directory '#{output_dir}'" if name.to_s != output_dir.to_s
     stdout.puts msg
-  end
-
-  def fixme
-    return unless test ?f, 'Rakefile'
-    stdout.puts 'Now you need to fix these files'
-    system "#{::Bones::RUBY} -S rake notes"
   end
 
 end  # class Create

@@ -3,14 +3,13 @@ module TemplateBuilder::App::Helper
   
   def self.framework_factory(opts = {})
     gems = []
-    puts opts[:gems]
     opts[:gems].each { |gem| gems<< Gem.new(gem) }
     opts[:gems] = gems
     Framework.new opts
   end
   
 class Framework
-  attr_reader :name, :gems, :action, :command
+  attr_reader  :command
   def initialize(opts = {})
     @name = opts[:name]
     @gems = opts[:gems]
@@ -18,13 +17,21 @@ class Framework
     @command = opts[:command]
   end
   
-  def write(fileManager)
-    @gems.each{ |gem| fileManager.write_gem gem.to_s }
+  def run(fileManager)
+    @gems.each { |gem| fileManager.write_gem gem.to_s }
+    fileManager.write_action action.to_s if action.length>0
+  end
+  
+  def action
+    ret = []
+    @gems.each { |gem| ret <<  gem.action+"\n" if gem.action}
+    ret << "\t"+@action+"\n" if @action
+    ret
   end
 end
 
 class Gem
-  attr_reader :name, :version, :source, :action
+  attr_reader :action
   def initialize(opts = {})
     @version = opts[:version]
     @source = opts[:source]

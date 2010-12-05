@@ -10,6 +10,10 @@ module TemplateBuilder::App::FileAnalyzer
     FileParameter.instance.parameters_names
   end
   
+  def self.load_priority(type_name)
+    FileParameter.instance.priority type_name
+  end
+  
   def self.load_conf_file(file_name)
     YAML.load_file(File.join(TemplateBuilder::PATH,"/conf/"+file_name.to_s+".yml"))
   end
@@ -34,8 +38,8 @@ module TemplateBuilder::App::FileAnalyzer
     end
 
     def analyse_file
-      @config_file.each{ |k,v| @parameters[k.to_sym] = ["-#{k[0..0].to_s}", "--#{k} FRAMEWORK", "#{v.capitalize} .",
-              lambda { |item| @config_param[k.to_sym] = item }]  }
+      @config_file.each{ |k,v| @parameters[k.to_sym] = ["-#{k[0..0].to_s}", "--#{k} FRAMEWORK", "#{v['help'].capitalize} .",
+              lambda { |item| @config_param[k.to_sym] = [0,item] }]  }
     end
     
     def load_conf_file
@@ -44,6 +48,10 @@ module TemplateBuilder::App::FileAnalyzer
     
     def parameters_names
       @parameters.each_key.to_a
+    end
+    
+    def priority(type_name)
+      @config_file[type_name.to_s]["priority"]
     end
   end
   
@@ -64,6 +72,7 @@ module TemplateBuilder::App::FileAnalyzer
     
     def load_framework(name)
       opts = {:name => name, :gems =>[]}
+     # puts name
       @config_file[name].each do |key, value|
         if ["command","action"].include? key
           opts[key.to_sym] = value

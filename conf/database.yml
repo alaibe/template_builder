@@ -1,7 +1,21 @@
 sqlite :
+    command : sqlite3
+    action :
 oracle :
+    command : -d oracle
+    action :
 mongo  :
-ibm :
+    command :
+    action :
+ibm_db :
+    command : -d ibm_db
+    action :
 redis :
-postgresql :
+    command :
+    action :
+postgres :
+    command : -d postgresql
+    action :
 mysql :
+    command : -d mysql
+    action :

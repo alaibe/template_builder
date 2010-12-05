@@ -3,7 +3,6 @@ module TemplateBuilder::App
 class Command
 
   # :startdoc:
-
   attr_reader :stdout
   attr_reader :stderr
   attr_reader :config
@@ -14,13 +13,17 @@ class Command
     
     @config = {:name => nil, :force => nil, :verbose =>nil}
     @config_param = {}
-    standard_parameters.each_key{ |key| @config_param[key] = nil}
+    @command = []
+    standard_parameters.each_key{ |key| @config_param[key] = [priority(key)]}
   end
 
   def run( args )
     raise NotImplementedError
   end
-
+  
+  def priority(key)
+    FileAnalyzer.load_priority key
+  end
   # The project name from the command line.
   #
   def name
@@ -119,18 +122,25 @@ class Command
   def ask_for(framework_name)
     all_frameworks = FileAnalyzer.all_frameworks_for framework_name
     puts "Choose your "+framework_name.to_s+" framework ? (enter 0 for none)"
-    until @config_param[framework_name]
+    until @config_param[framework_name].length == 2
       all_frameworks.each_with_index{ |value,index| puts "("+(index+1).to_s+") "+value.to_s+"\r\n" }
       answer = STDIN.gets
-      @config_param[framework_name] = all_frameworks[answer.to_i-1] if (1..all_frameworks.length).include? answer.to_i
-      @config_param[framework_name] = "none" if 0 == answer
+      @config_param[framework_name] << all_frameworks[answer.to_i-1] if (1..all_frameworks.length).include? answer.to_i
+      @config_param[framework_name] << "none" if 0 == answer
     end 
     
   end
   
   def run_framework(fileManager, opts = {})
     framework = FileAnalyzer.load_framework opts
-    framework.write fileManager
+    fileManager.write_framework_introduction opts[:name]
+    framework.run fileManager
+    special_case_data_mapper if @config_param[:orm] == "date_mapper"
+    @command << framework.command
+  end
+  
+  def special_case_data_mapper
+    fileManager.write "dm-"+@config_param[:database].to_s+"adapter"
   end
   
   module ClassMethods
@@ -156,7 +166,6 @@ class Command
         args.each { |val|
           next unless val.instance_of? String
           next unless val =~ %r/^--(\w+)/
-
           args << "__#$1"
           define_method(args.last.to_sym, &block)
           options << args

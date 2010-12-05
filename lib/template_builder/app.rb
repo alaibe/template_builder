@@ -42,7 +42,7 @@ module TemplateBuilder::App
       cmd = case cmd_str
         when *commands
           key = cmd_str.to_sym
-          @all_commands[key].new @opts          
+          @all_commands[key].new @opts       
         when nil, '-h', '--help'
           help
         when '-v', '--version'
@@ -50,7 +50,8 @@ module TemplateBuilder::App
         else
           help
           raise Error, "Unknown command #{cmd_str.inspect}"
-        end        
+        end
+    
       if cmd
         cmd.parse args
         cmd.run

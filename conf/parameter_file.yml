@@ -1,5 +1,9 @@
-#database : set the database you want to use
-orm : set the orm framework you want to use
+orm : 
+    help : set the orm framework you want to use
+    priority : 2
+database : 
+    help : set the database you want to use
+    priority : 1
 #javascript : set the javascript framework you want to use
 #templating : set the templating framework you want to use
 #css : set the css framework you want to use

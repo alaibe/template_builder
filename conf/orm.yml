@@ -1,4 +1,6 @@
 active_record :
+    command :
+    action :
 
 data_mapper:
     dm-migrations:
@@ -25,6 +27,8 @@ data_mapper:
     dm-observer:
         version : 
         source :
+    command : -O
+    action :
     
 
 mongo_mapper :
@@ -37,6 +41,9 @@ mongo_mapper :
    mongo_session_store :
        source :
        version :
+       action :  inject_into_file 'config/initializers/session_store.rb', 'require mongo_session_store/mongo_mapper \n ActionController::Base.session_store = :mongo_mapper_store'
+   command : -O
+   action : generate 'mongo_mapper:config'
 
 mongoid :
    mongoid :
@@ -47,4 +54,7 @@ mongoid :
        source :
    mongo_session_store :
        source :
-       version :
+       version :    require 'mongo_session_store/mongo_mapper'
+                  ActionController::Base.session_store = :mongo_mapper_store
+   command : -O
+   action : generate 'mongoid:config'
