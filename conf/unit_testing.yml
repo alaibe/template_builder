@@ -1,6 +1,6 @@
 test_unit :
     command :
-    action :
+    action : []
 
 rspec :
     rspec-rails :

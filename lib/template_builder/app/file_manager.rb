@@ -9,9 +9,7 @@ module TemplateBuilder::App
     def initialize( opts = {} )
       self.file_name = opts[:file]
       self.verbose = opts[:verbose]
-            
-      self.file = File.new(self.file_name,  "w+")
-              
+      self.file = File.new(self.file_name,  "w+")      
       @out = opts[:stdout] || $stdout
       @err = opts[:stderr] || $stderr
     end
@@ -60,9 +58,8 @@ say 'Running after Bundler callbacks.'
     end
     
     def write_action(action)
-      puts action.to_s
       write "after_bundler do\n"
-      action.each{ |act| puts act; write "\t"+act }
+      action.each{ |act| write "\t"+act.to_s }
       write "end"
     end
     

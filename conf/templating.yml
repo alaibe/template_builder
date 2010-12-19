@@ -13,3 +13,13 @@ haml :
         source : git => 'git://github.com/indirect/rails3-generators.git'
     command :
     action : []
+    
+slim :
+    slim:
+        version : 
+        source :
+    slim-rails :
+        version : 
+        source :
+    command :
+    action : []

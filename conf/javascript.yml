@@ -1,6 +1,6 @@
 prototype :
    command :
-   action :
+   action : []
 
 jquery :
    command : -J 
