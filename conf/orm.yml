@@ -29,21 +29,20 @@ data_mapper:
         source :
     command : -O
     action :
-    
 
 mongo_mapper :
-   mongo_mapper :
+   mongo_mapper-rails3 :
        version : 
        source :
+       action : gsub_file 'config/initializers/session_store.rb', 'active_record_store', 'mongo_mapper_store'
    bson_ext :
        version :
        source :
-   mongo_session_store :
+   mongo_mapper :
        source :
        version :
-       action :  inject_into_file 'config/initializers/session_store.rb', 'require mongo_session_store/mongo_mapper \n ActionController::Base.session_store = :mongo_mapper_store'
    command : -O
-   action : generate 'mongo_mapper:config'
+   action :  generate 'mongo_mapper:config'
 
 mongoid :
    mongoid :
@@ -54,7 +53,7 @@ mongoid :
        source :
    mongo_session_store :
        source :
-       version :    require 'mongo_session_store/mongo_mapper'
-                  ActionController::Base.session_store = :mongo_mapper_store
+       version :
+       action : gsub_file 'config/initializers/session_store.rb', 'active_record_store', 'mongoid_store'
    command : -O
    action : generate 'mongoid:config'

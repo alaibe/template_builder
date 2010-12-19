@@ -22,13 +22,15 @@ module TemplateBuilder::App
 #
 initializer 'generators.rb', <<-RUBY
   Rails.application.config.generators do |g|
-end
+  end
 RUBY"
 
       template = "template = {"
-      config_file.each{ |key, value| template += "'"+key.to_s+"'=>'"+value.to_s+"',"}
-      template += "}"
-write template
+      config_file.each do |key, value| 
+        template += "'"+key.to_s+"'=>'"+value.name+"',"
+      end
+      write template[0..template.length-2]+"}"
+      
       write"recipes = template.values.flatten
 
 @after = []
@@ -41,7 +43,7 @@ def after_bundler(&block); @after << block; end"
 
 say 'Running Bundler install. This will take a while.'
 run 'bundle install'
-say_wizard 'Running after Bundler callbacks.'
+say 'Running after Bundler callbacks.'
 @after.each{|b| b.call}
 
 # >---------------------------[ Install Command ]-----------------------------<

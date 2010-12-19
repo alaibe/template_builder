@@ -14,7 +14,7 @@ class Command
     @config = {:name => nil, :force => nil, :verbose =>nil}
     @config_param = {}
     @command = []
-    standard_parameters.each_key{ |key| @config_param[key] = [priority(key)]}
+    standard_parameters.each_key{ |key| @config_param[key] = TemplateBuilder::App::Helper::Parameter.new(:priority=>priority(key)) }
   end
 
   def run( args )
@@ -122,11 +122,11 @@ class Command
   def ask_for(framework_name)
     all_frameworks = FileAnalyzer.all_frameworks_for framework_name
     puts "Choose your "+framework_name.to_s+" framework ? (enter 0 for none)"
-    until @config_param[framework_name].length == 2
+    until @config_param[framework_name].name
       all_frameworks.each_with_index{ |value,index| puts "("+(index+1).to_s+") "+value.to_s+"\r\n" }
       answer = STDIN.gets
-      @config_param[framework_name] << all_frameworks[answer.to_i-1] if (1..all_frameworks.length).include? answer.to_i
-      @config_param[framework_name] << "none" if 0 == answer
+      @config_param[framework_name].name = all_frameworks[answer.to_i-1] if (1..all_frameworks.length).include? answer.to_i
+      @config_param[framework_name] = "none" if 0 == answer
     end 
     
   end
@@ -135,12 +135,12 @@ class Command
     framework = FileAnalyzer.load_framework opts
     fileManager.write_framework_introduction opts[:name]
     framework.run fileManager
-    special_case_data_mapper if @config_param[:orm] == "date_mapper"
+    special_case_data_mapper fileManager if @config_param[:orm].name == "data_mapper"
     @command << framework.command
   end
   
-  def special_case_data_mapper
-    fileManager.write "dm-"+@config_param[:database].to_s+"adapter"
+  def special_case_data_mapper(fileManager)
+    fileManager.write "gem 'dm-"+@config_param[:database].name.to_s+"-adapter'"
   end
   
   module ClassMethods

@@ -29,11 +29,11 @@ of option as the database, the javascript framework etc ..
     )
     announce 
     sorted_param =  @config_param.sort{|a,b| a[1].to_s.to_i <=> b[1].to_s.to_i }.map
-    sorted_param.each{ |k,v| ask_for k unless v.length == 2}
+    sorted_param.each{ |k,v| ask_for k unless v.name }
     
-    file_manager.start_file @config_param
+    file_manager.start_file sorted_param
     
-    @config_param.each{ |k,v| run_framework file_manager, :type=>k, :name=>v unless v == "none"}
+    sorted_param.each{ |k,v| run_framework file_manager, :type=>k, :name=>v.name unless v.name == "none"}
 
     file_manager.end_file name, @command
     
