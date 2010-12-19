@@ -47,7 +47,7 @@ say 'Running after Bundler callbacks.'
 @after.each{|b| b.call}
 
 # >---------------------------[ Install Command ]-----------------------------<
-#  rails new APP_NAME -m "+name+" "+command.to_s+"
+#  rails new APP_NAME -m "+name+" "+command.to_s+" -f
 # >---------------------------------------------------------------------------<"
     end
     

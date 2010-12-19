@@ -1,6 +1,6 @@
 erb :
     command :
-    action :
+    action : []
 haml :
     haml:
         version : >= 3.0.0
