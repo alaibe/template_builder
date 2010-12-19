@@ -1,4 +1,6 @@
 erb :
+    command :
+    action :
 haml :
     haml:
         version : >= 3.0.0
@@ -9,3 +11,5 @@ haml :
     rails3-generators :
         version :
         source : git => 'git://github.com/indirect/rails3-generators.git'
+    command :
+    action : []

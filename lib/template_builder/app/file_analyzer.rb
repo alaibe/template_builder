@@ -72,6 +72,7 @@ module TemplateBuilder::App::FileAnalyzer
     
     def load_framework(name)
       opts = {:name => name, :gems =>[]}
+      puts name
       @config_file[name].each do |key, value|
         if ["command","action"].include? key
           opts[key.to_sym] = value

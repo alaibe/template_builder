@@ -1,6 +1,6 @@
 active_record :
     command :
-    action :
+    action : []
 
 data_mapper:
     dm-migrations:
@@ -28,7 +28,7 @@ data_mapper:
         version : 
         source :
     command : -O
-    action :
+    action : []
 
 mongo_mapper :
    mongo_mapper-rails3 :
@@ -42,7 +42,7 @@ mongo_mapper :
        source :
        version :
    command : -O
-   action :  generate 'mongo_mapper:config'
+   action :  [generate 'mongo_mapper:config']
 
 mongoid :
    mongoid :
@@ -56,4 +56,4 @@ mongoid :
        version :
        action : gsub_file 'config/initializers/session_store.rb', 'active_record_store', 'mongoid_store'
    command : -O
-   action : generate 'mongoid:config'
+   action : [generate 'mongoid:config']

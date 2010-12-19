@@ -1,15 +1,27 @@
-orm : 
-    help : set the orm framework you want to use
-    priority : 2
 database : 
     help : set the database you want to use
     priority : 1
-#javascript : set the javascript framework you want to use
-#templating : set the templating framework you want to use
-#css : set the css framework you want to use
-#unit_testing : set the unit testing framework you want to use
-#integration_testing : set the integration testing framework you want to use
-#authentication : set the authentication framework you want to use
+orm : 
+    help : set the orm framework you want to use
+    priority : 2
+javascript : 
+    help : set the javascript framework you want to use
+    priority : 2
+templating : 
+    help : set the templating framework you want to use
+    priority : 2
+css : 
+    help : set the css framework you want to use
+    priority : 2
+unit_testing : 
+    help : set the unit testing framework you want to use
+    priority : 3
+integration_testing :
+    help : set the integration testing framework you want to use
+    priority : 3
+authentication : 
+    help : set the authentication framework you want to use
+    priority : 4
 
 
 

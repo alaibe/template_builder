@@ -28,7 +28,7 @@ of option as the database, the javascript framework etc ..
       :verbose => verbose?
     )
     announce 
-    sorted_param =  @config_param.sort{|a,b| a[1].to_s.to_i <=> b[1].to_s.to_i }.map
+    sorted_param =  @config_param.sort{|a,b| a[1].priority <=> b[1].priority }.map
     sorted_param.each{ |k,v| ask_for k unless v.name }
     
     file_manager.start_file sorted_param

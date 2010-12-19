@@ -19,13 +19,13 @@ class Framework
   
   def run(fileManager)
     @gems.each { |gem| fileManager.write_gem gem.to_s }
-    fileManager.write_action action.to_s if action.length>0
+    fileManager.write_action action if action.length>0
   end
   
   def action
     ret = []
-    @gems.each { |gem| ret <<  gem.action+"\n" if gem.action}
-    ret << "\t"+@action+"\n" if @action
+    @gems.each { |gem| ret <<  gem.action if gem.action}
+    @action.each {  |act| ret << act if act}
     ret
   end
 end

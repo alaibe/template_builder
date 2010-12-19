@@ -2,8 +2,16 @@ sass :
     haml:
         version : >= 3.0.0
         source :
+    command : 
+    action : []
+    
 css :
+    command :
+    action : []
+
 less :
     less:
         source :
         version :
+    command :
+    action : []

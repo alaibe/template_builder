@@ -16,3 +16,5 @@ announcement.txt
 coverage
 doc
 pkg
+spec/*
+test/*

@@ -2,7 +2,22 @@ devise :
     devise :
         version :
         source :
+    command : 
+    action : [generate 'devise:install',
+              "case template['orm']
+                  when 'mongo_mapper'
+                    gem 'mm-devise'
+                    gsub_file 'config/intializers/devise.rb', 'devise/orm/active_record', 'devise/orm/mongo_mapper_active_model'
+                  when 'mongoid'
+                    gsub_file 'config/intializers/devise.rb', 'devise/orm/active_record', 'devise/orm/mongoid'
+                  when 'active_record'
+                                    ",
+              generate 'devise user']
+
 omniauth :
     omniauth :
         version :
         source :
+    command : 
+    action : [file "app/controllers/sessions_controller.rb", "class SessionsController < ApplicationController\n  def callback\n    auth \n  end\n\n  def auth; request.env['omniauth'] end\nend",
+             route "match '/auth/:provider/callback', :to => 'sessions#callback'"]

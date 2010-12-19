@@ -1,5 +1,10 @@
 test_unit :
+    command :
+    action :
+
 rspec :
     rspec-rails :
         version :
         source :
+    command : -T
+    action : [generate 'rspec:install']

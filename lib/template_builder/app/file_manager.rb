@@ -60,8 +60,9 @@ say 'Running after Bundler callbacks.'
     end
     
     def write_action(action)
+      puts action.to_s
       write "after_bundler do\n"
-      write action.to_s
+      action.each{ |act| puts act; write "\t"+act }
       write "end"
     end
     
