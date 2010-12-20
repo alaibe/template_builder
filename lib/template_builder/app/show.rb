@@ -18,22 +18,22 @@ and for each type, can show you a description of all plugin available
   end
 
   def run
-    raise Error, "File #{name} doesn't exists." if !force and !test ?e, name
-    file_manager = FileManager.new(
-      :file => name,
-      :stdout => stdout,
-      :stderr => stderr,
-      :verbose => verbose?
-    )
-    announce 
-    sorted_param =  @config_param.sort{|a,b| a[1].priority <=> b[1].priority }.map
-    sorted_param.each{ |k,v| ask_for k unless v.name }
-    
-    file_manager.start_file sorted_param
-    
-    sorted_param.each{ |k,v| run_framework file_manager, :type=>k, :name=>v.name unless v.name == "none"}
-
-    file_manager.end_file name, @command
+   # raise Error, "File #{name} doesn't exists." if !force and !test ?e, name
+   # file_manager = FileManager.new(
+   #   :file => name,
+   #   :stdout => stdout,
+   #   :stderr => stderr,
+   #   :verbose => verbose?
+   # )
+   # announce 
+   # sorted_param =  @config_param.sort{|a,b| a[1].priority <=> b[1].priority }.map
+   # sorted_param.each{ |k,v| ask_for k unless v.name }
+   # 
+   # file_manager.start_file sorted_param
+   # 
+   # sorted_param.each{ |k,v| run_framework file_manager, :type=>k, :name=>v.name unless v.name == "none"}
+#
+#    file_manager.end_file name, @command
     
   end
 

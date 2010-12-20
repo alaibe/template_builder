@@ -4,16 +4,20 @@ template_builder
 
 == DESCRIPTION:
 
-Generate a template for your ruby on rails project
+Template-builder is a handy tool that builds a template for your new Ruby
+on Rails projects. The template contains all you need to build the RoR 
+project that you want.
 
-== FEATURES/PROBLEMS:
-
-
-== SYNOPSIS:
+== USAGE:
   
-  template_builder foo
+    template_builder -h/--help
+    template_builder -v/--version
+    template_builder [command] [parameter type parameter type] [options]
 
-== REQUIREMENTS:
+== EXAMPLES:
+
+    template_builder new your_template
+    template_builder show 
 
 
 == INSTALL:
