@@ -28,10 +28,28 @@ class Framework
     @action.each {  |act| ret << act if act}
     ret
   end
+  
+  def to_s
+    msg = @name+"\n"
+    msg += "\tAll gems for this plugin : \n" 
+    @gems.each do |gem|  
+      msg +="\t\tname => #{gem.name}\n"
+      msg +="\t\t\t-source => #{gem.source}\n"
+      msg +="\t\t\t-version => #{gem.version}\n"
+      msg +="\t\t\t-action => #{gem.action}\n"
+    end 
+    msg +="\n"
+    msg += "\tcommand => #{@command}\n"
+    msg +="\n"
+    msg += "\tAll actions for this plugin : \n"
+    @action.each {  |act| msg+="\taction => #{act.to_s}\n"}
+    msg
+  end
+  
 end
 
 class Gem
-  attr_reader :action
+  attr_reader :action, :version, :source, :name
   def initialize(opts = {})
     @version = opts[:version]
     @source = opts[:source]

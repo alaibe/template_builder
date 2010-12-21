@@ -39,7 +39,7 @@ module TemplateBuilder::App::FileAnalyzer
 
     def analyse_file
       @config_file.each{ |k,v| @parameters[k.to_sym] = ["-#{k[0..0].to_s}", "--#{k} FRAMEWORK", "#{v['help'].capitalize} .",
-              lambda { |item| @config_param[k.to_sym] = Parameter.new :priority=>0,:name=>item }]  }
+              lambda { |item| @config_param[k.to_sym] = TemplateBuilder::App::Helper::Parameter.new :priority=>0,:name=>item }]  }
     end
     
     def load_conf_file

@@ -1,4 +1,7 @@
-== 1.0.0 / 2010-11-21
+
+== 0.2.0 / 2010-12-21
+* show action
+== 0.1.0 / 2010-11-21
 
 * 1 major enhancement
   * Birthday!

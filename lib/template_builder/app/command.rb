@@ -77,7 +77,7 @@ class Command
           opts.on(*parameter)
         when String
           opts.separator("  #{parameter.strip}")
-        else opts.separator('') end
+        else puts parameter;opts.separator('') end
       }
       opts.separator ''
     end
