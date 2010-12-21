@@ -1,7 +1,7 @@
 module TemplateBuilder::App
 class Show < Command
   def self.initialize_show
-    synopsis 'template_builder show [parameter]'
+    synopsis 'template_builder show [framework] [plugin]'
 
     summary 'Show all kind of awesome framework available .'
 

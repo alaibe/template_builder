@@ -96,7 +96,7 @@ DESCRIPTION
                puts msg
              end
            }
-     ary = [:new, :show]
+     ary = [:new, :show, :add]
      ary.each(&fmt)
      (@all_commands.keys - ary).each(&fmt)
       msg.concat <<-MSG
