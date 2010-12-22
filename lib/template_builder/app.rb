@@ -4,7 +4,7 @@ require 'uri'
 module TemplateBuilder::App
   extend LittlePlugger(:path => 'template_builder/app', :module => TemplateBuilder::App)
 
-  disregard_plugins :command, :file_manager, :file_analyzer
+  disregard_plugins :command, :file_manager, :file_analyzer; :conf_writer
 
   Error = Class.new(StandardError)
 

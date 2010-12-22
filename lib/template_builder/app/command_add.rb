@@ -15,14 +15,11 @@ type and new plugin for this framework.
   end
 
   def run
-   puts @param
-   type = @param.shift
-   array =  FileAnalyzer.all_frameworks_for(type)
-   if @param.length == 0
-   else
-     plugin = @param.shift
-     framework = FileAnalyzer.load_framework :type=>type, :name=>plugin
-     puts framework.to_s
+   case @param.length
+   when 1
+     create_framework @param.shift
+   when 2
+     create_plugin @param.shift, @param.shift
    end
   end
 
@@ -36,5 +33,19 @@ type and new plugin for this framework.
     @param =  args
   end
   
+  def create_framework(name)
+    priority = ask_for_priority
+    ConfWriter.write_new_framework name, priority
+  end
+  
+  def create_plugin(framework_name,plugin_name)
+    ConfWriter.write_new_plugin framework_name, plugin_name
+  end
+
+  def ask_for_priority
+    puts "Choose the priority of your framework ? (1 <=> hight et 5 <=> less)"
+    answer = STDIN.gets until (1..5).include? answer.to_i
+    answer
+  end
 end
 end
