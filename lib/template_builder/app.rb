@@ -57,14 +57,18 @@ module TemplateBuilder::App
         cmd.run
       end
 
-   # rescue TemplateBuilder::App::Error => err
-   #   stderr.puts "ERROR:  While executing template builder ..."
-   #   stderr.puts "    #{err.message}"
-   #   exit 1
-   # rescue StandardError => err
-   #   stderr.puts "ERROR:  While executing template builder ... (#{err.class})"
-   #   stderr.puts "    #{err.to_s}"
-   #   exit 1
+    rescue TemplateBuilder::App::Error => err
+      stderr.puts "ERROR:  While executing template builder ..."
+      stderr.puts "    #{err.message}"
+      exit 1
+    rescue StandardError => err
+      stderr.puts "ERROR:  While executing template builder ... (#{err.class})"
+      stderr.puts "    #{err.to_s}"
+      exit 1
+    rescue Exception => err
+      stderr.puts "ERROR:  While executing template builder ... (#{err.class})"
+      stderr.puts "    #{err.to_s}"
+      exit 1
     end
 
     # Show the toplevel Template builder help message.

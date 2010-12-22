@@ -7,7 +7,9 @@ module TemplateBuilder::App::ConfWriter
     end
   end
   
-  def self.write_new_plugin(framework_name,plugin_name)
-    raise Exception, "Framework #{name} doesn't exists." unless test ?e, TemplateBuilder::PATH+"/conf/"+framework_name+".yml"
+  def self.write_new_plugin(framework_name, plugin)
+    File.open(File.join(TemplateBuilder::PATH+"/conf/",framework_name+".yml"),"a+") do |out|
+      out.write plugin
+    end
   end
 end

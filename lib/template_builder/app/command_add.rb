@@ -20,6 +20,8 @@ type and new plugin for this framework.
      create_framework @param.shift
    when 2
      create_plugin @param.shift, @param.shift
+   else
+     Raise Exception, "Bad number of argument, see -h for more information"
    end
   end
 
@@ -39,7 +41,33 @@ type and new plugin for this framework.
   end
   
   def create_plugin(framework_name,plugin_name)
-    ConfWriter.write_new_plugin framework_name, plugin_name
+    raise Exception, "Framework #{name} doesn't exists." unless test ?e, TemplateBuilder::PATH+"/conf/"+framework_name+".yml"
+    write = "\n#{plugin_name} :\n"
+    answer = "Would you add a gem at your plugin? (y/yes)"
+    puts answer
+    while ["y\n","yes\n"].include? STDIN.gets
+      write += build_new_gem 
+      puts answer
+    end
+    puts "plugin command  ="
+    write += "\tcommand :"+STDIN.gets
+    puts "plugin action  ="
+    write += "\taction :["+STDIN.gets+"]"
+    ConfWriter.write_new_plugin framework_name, write
+  end
+  
+  def build_new_gem
+     puts "gem name = "    
+     msg = "\t"+STDIN.gets
+     puts "gem version = "
+     msg += "\t\tversion : "+STDIN.gets
+     puts "gem source = "
+     msg += "\t\tsource : "+STDIN.gets
+     puts "gem action = "
+     msg += "\t\taction : "+STDIN.gets
+     puts "gem command = "
+     msg += "\t\tcommand : "+STDIN.gets
+     msg
   end
 
   def ask_for_priority

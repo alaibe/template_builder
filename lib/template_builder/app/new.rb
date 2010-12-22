@@ -32,9 +32,7 @@ of option as the database, the javascript framework etc ..
     sorted_param.each{ |k,v| ask_for k unless v.name }
     
     file_manager.start_file sorted_param
-    
     sorted_param.each{ |k,v| run_framework file_manager, :type=>k, :name=>v.name unless v.name == "none"}
-
     file_manager.end_file name, @command
     
   end
