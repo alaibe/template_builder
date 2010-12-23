@@ -18,6 +18,7 @@ project that you want.
 
     template_builder new your_template
     template_builder show 
+    template_builder add framework plugin
 
 
 == INSTALL:

@@ -14,5 +14,6 @@ Bones {
   email  'anthony.laibe@gmail.com'
   url      'https://github.com/alaibe/template_builder'
   ignore_file  '.gitignore'
+  gem.dependencies 'little-plugger'
 }
 
