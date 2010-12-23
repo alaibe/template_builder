@@ -5,10 +5,10 @@ prototype :
 jquery :
    command : -J 
    action : ['get "https://github.com/rails/jquery-ujs/raw/master/src/rails.js" , "public/javascript/rails.js"',
-            'get http://code.jquery.com/jquery-1.4.2.min.js, "public/javascript/jquery.js"']
+            'get "http://code.jquery.com/jquery-1.4.2.min.js", "public/javascript/jquery.js"']
 
 mootools :
    command : -J
-   action : ['get http://ajax.googleapis.com/ajax/libs/mootools/1.2.5/mootools-yui-compressed.js, "public/javascript/mootools.js"',
-            'get https://github.com/kevinvaldek/mootools-ujs/raw/master/Source/rails.js, "public/javascript/rails.js"',
+   action : ['get "http://ajax.googleapis.com/ajax/libs/mootools/1.2.5/mootools-yui-compressed.js", "public/javascript/mootools.js"',
+            'get "https://github.com/kevinvaldek/mootools-ujs/raw/master/Source/rails.js", "public/javascript/rails.js"',
             'gsub_file "config/application.rb", "jquery", "mootools"']

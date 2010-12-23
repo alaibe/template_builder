@@ -3,6 +3,9 @@ active_record :
     action : []
 
 data_mapper:
+    dm-core:
+        version : 
+        source :
     dm-migrations:
         version : 
         source :

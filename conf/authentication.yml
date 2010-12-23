@@ -10,7 +10,8 @@ devise :
                     gsub_file 'config/intializers/devise.rb', 'devise/orm/active_record', 'devise/orm/mongo_mapper_active_model'\n
                   when 'mongoid'\n
                     gsub_file 'config/intializers/devise.rb', 'devise/orm/active_record', 'devise/orm/mongoid'\n
-                  when 'active_record'\n\n",
+                  when 'active_record'\n
+                  end\n",
               generate 'devise user']
 
 omniauth :
